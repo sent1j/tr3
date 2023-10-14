@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import sqlite3
 
-
+#создание главного окна
 class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
@@ -106,7 +106,7 @@ class Main(tk.Frame):
         [self.tree.delete(i) for i in self.tree.get_children()]
         [self.tree.insert("", "end", values=row) for row in self.db.cursor.fetchall()]
 
-
+#создание функции добавления контакта
 class Child(tk.Toplevel):
     def __init__(self):
         super().__init__(root)
@@ -148,7 +148,7 @@ class Child(tk.Toplevel):
             ),
         )
 
-
+#создание функции редактирования контакта 
 class Update(Child):
     def __init__(self):
         super().__init__()
@@ -180,7 +180,7 @@ class Update(Child):
         self.entry_email.insert(0, row[2])
         self.entry_tel.insert(0, row[3])
 
-
+#создание функции поиска
 class Search(tk.Toplevel):
     def __init__(self):
         super().__init__()
@@ -209,7 +209,7 @@ class Search(tk.Toplevel):
         )
         search_btn.bind("<Button-1>", lambda event: self.destroy(), add="+")
 
-
+#создание датабазы
 class DB:
     def __init__(self):
         self.conn = sqlite3.connect("db.db")
@@ -229,7 +229,6 @@ class DB:
             """INSERT INTO db(name, tel, email) VALUES(?, ?, ?)""", (name, tel, email)
         )
         self.conn.commit()
-
 
 if __name__ == "__main__":
     root = tk.Tk()
